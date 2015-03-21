@@ -1,0 +1,201 @@
+#platform "uLCD-43PT"
+
+#inherit "4DGL_16bitColours.fnc"
+
+#inherit "VisualConst.inc"
+
+#inherit "MainDisplayConst.inc"
+
+#inherit "ledDigitsDisplay.inc"
+
+#CONST
+    STATE_BTN_OFF 0
+    STATE_BTN_ON  1
+#END
+
+#CONST
+    NO_FORM                 0
+    FORM_MAIN_RACE_DISPLAY  1
+#END
+
+#CONST
+     LAP_TIME_RECALCULATE_INTERVAL 100
+#END
+
+#CONST
+    TIMER_TOTAL
+    TIMER_LAP
+#END
+
+var activeForm := NO_FORM;
+
+// Timing Parameters
+var TimerStartTime:= 0;
+var LapStartTime  := 0;
+var TotalTimeMins := 0;
+var TotalTimeSecs := 0;
+var LapTimeMins   := 0;
+var LapTimeSecs   := 0;
+
+func getSysSeconds()
+    return (sys_T_HI() * 655 + (0x7FFF & (sys_T() >> 1)) / 50) / 10;
+endfunc
+
+func startTimer(var timer)
+    switch (timer)
+        case TIMER_TOTAL:
+            TotalTimeMins  := 0;
+            TotalTimeSecs  := 0;
+            TimerStartTime := getSysSeconds();
+            break;
+
+        case TIMER_LAP:
+            LapTimeMins   := 0;
+            LapTimeSecs   := 0;
+            LapStartTime  := getSysSeconds();
+            break;
+
+        default:
+            break;
+    endswitch
+endfunc
+
+func draw_MainRaceDisplay()
+    var private lastUpdateTime := 0;
+    var private lapTime := 0;
+    var private totalTime := 0;
+
+    var fullDraw := 0;
+
+    // Clear the display
+    if (activeForm != FORM_MAIN_RACE_DISPLAY)
+        gfx_Cls();
+        activeForm := FORM_MAIN_RACE_DISPLAY;
+
+        // Cruise Set/Reduce Button
+        img_Show(hndl, iCruiseSetReduce);  // show button, only do this once
+
+        // Cruise Resume/Increase Button
+        img_Show(hndl, iCruiseResumeIncrease);  // show button, only do this once
+
+        // Lap Time Displays
+        img_Show(hndl, iTotalTime);  // show all digits at 0, only do this once
+        img_Show(hndl, iLapTime);  // show all digits at 0, only do this once
+    endif
+
+    // Update the lap timers
+    if ((sys_T() - lastUpdateTime) >= LAP_TIME_RECALCULATE_INTERVAL)
+        totalTime := getSysSeconds() - TimerStartTime;
+        lapTime := getSysSeconds() - LapStartTime;
+
+        TotalTimeSecs := totalTime - TotalTimeMins * 60;
+        if (TotalTimeSecs >= 60)
+            TotalTimeSecs := TotalTimeSecs - 60;
+            TotalTimeMins := TotalTimeMins + 1;
+        endif
+
+        LapTimeSecs := lapTime - LapTimeMins * 60;
+        if (LapTimeSecs >= 60)
+            LapTimeSecs := LapTimeSecs - 60;
+            LapTimeMins := LapTimeMins + 1;
+        endif
+
+        lastUpdateTime := sys_T();
+    endif
+
+    // MainRaceDisplay
+    var capVoltPositive := 10;
+    var capVoltNegative := 20;
+
+    // CapVoltPositive LED Digit Display
+    img_SetWord(hndl, iCapVoltPositive, IMAGE_INDEX, capVoltPositive) ; // where frame is 0 to 100 (for a displayed 0 to 100)
+    img_Show(hndl,iCapVoltPositive) ;
+
+    // CapVoltNegative LED Digit Display
+    img_SetWord(hndl, iCapVoltNegative, IMAGE_INDEX, capVoltNegative) ; // where frame is 0 to 100 (for a displayed 0 to 100)
+    img_Show(hndl,iCapVoltNegative) ;
+
+    // CruiseResumeIncrease Button
+    img_ClearAttributes(hndl, iCruiseResumeIncrease, I_TOUCH_DISABLE); // set to enable touch, only need to do this once
+    img_SetWord(hndl, iCruiseResumeIncrease, IMAGE_INDEX, STATE_BTN_OFF); // where state is 0 for up and 1 for down
+    img_Show(hndl,iCruiseResumeIncrease) ;
+
+    // CruiseSetReduce 1.0 generated 3/14/2015 2:03:14 PM
+    img_ClearAttributes(hndl, iCruiseSetReduce, I_TOUCH_DISABLE); // set to enable touch, only need to do this once
+    img_SetWord(hndl, iCruiseSetReduce, IMAGE_INDEX, STATE_BTN_ON); // where state is 0 for up and 1 for down
+    img_Show(hndl,iCruiseSetReduce) ;
+
+    // TotalTime 1.0 generated 3/14/2015 2:17:07 PM
+    ledDigitsDisplay(TotalTimeMins * 100 + TotalTimeSecs, iTotalTime+1, 124, 4, 3, 88, 0) ;
+
+    // LapTime 1.0 generated 3/14/2015 2:17:24 PM
+    ledDigitsDisplay(LapTimeMins * 100 + LapTimeSecs, iLapTime+1, 124, 4, 3, 87, 0) ;
+
+    // Statictext1 1.0 generated 3/14/2015 2:03:14 PM
+    img_Show(hndl,iStatictext1) ;
+
+    // Statictext2 1.0 generated 3/14/2015 2:03:14 PM
+    img_Show(hndl,iStatictext2) ;
+endfunc
+
+func main()
+//  var hstrings ; // Handle to access uSD strings, uncomment if required
+//  var hFontx ;   // Handle to access uSD fonts, uncomment if required and change n to font number
+//  Uncomment the following if uSD images, fonts or strings used.
+
+    putstr("Mounting...\n");
+    if (!(disk:=file_Mount()))
+        while(!(disk :=file_Mount()))
+            putstr("Drive not mounted...");
+            pause(200);
+            gfx_Cls();
+            pause(200);
+        wend
+    endif
+    gfx_Cls();
+
+//    gfx_TransparentColour(0x0020);    // uncomment if transparency required
+//    gfx_Transparency(ON);             // uncomment if transparency required
+
+//  hFontn := file_LoadImageControl("NoName1.dan", "MAINDI~1.gcn", 1); // Open handle to access uSD fonts, uncomment if required and change n to font number dropping a and c if > 9
+//  hstrings := file_Open("MAINDI~1.txf", 'r') ; // Open handle to access uSD strings, uncomment if required
+    hndl := file_LoadImageControl("MAINDI~1.dat", "MAINDI~1.gci", 1);
+
+    // Place the display in landscape mode
+    gfx_Set(SCREEN_MODE, LANDSCAPE);
+
+    // Enable touch
+    touch_Set(TOUCH_ENABLE);
+
+    // Start the race timer
+    startTimer(TIMER_TOTAL);
+    startTimer(TIMER_LAP);
+
+    draw_MainRaceDisplay();
+
+    while (1)
+        if (activeForm == FORM_MAIN_RACE_DISPLAY)
+            draw_MainRaceDisplay();
+        endif
+
+        checkTouchEvents();
+    wend
+endfunc
+
+#CONST
+    LEFT_COL_WIDTH 124
+#END
+
+func checkTouchEvents()
+    if(touch_Get(TOUCH_STATUS) == TOUCH_PRESSED)
+        var x;
+        var y;
+
+        x := touch_Get(TOUCH_GETX);
+        y := touch_Get(TOUCH_GETY);
+
+        if (y > LEFT_COL_WIDTH)
+            startTimer(TIMER_LAP);
+        endif
+    endif
+endfunc

@@ -1,0 +1,215 @@
+==============================================================
+==============================================================
+4DGL Compiler 2.7.1.0 -- Copyright 2004-2012 4D Labs
+** C:\Users\Mike\Documents\LCDDisplay\MainDisplay.4Dg
+compiled Sat Mar 14 15:46:57 2015
+
+==============================================================
+==============================================================
+
+
+No Ref for file
+[LINKING]
+function 6, checkTouchEvents, address 73
+stack usage 4 + 4
+function 'checkTouchEvents' requires no arguments
+function 'checkTouchEvents' has no return value
+
+[LINKING]
+function 5, main, address 185
+(main entry point)
+stack usage 0 + 4
+function 'main' requires no arguments
+function 'main' has no return value
+
+[LINKING]
+function 4, draw_MainRaceDisplay, address 343
+stack usage 6 + 4
+function 'draw_MainRaceDisplay' requires no arguments
+function 'draw_MainRaceDisplay' has no return value
+
+[LINKING]
+function 3, startTimer, address 743
+stack usage 0 + 4
+function 'startTimer' requires 1 argument
+function 'startTimer' has no return value
+
+[LINKING]
+function 2, getSysSeconds, address 822
+stack usage 0 + 4
+function 'getSysSeconds' requires no arguments
+function 'getSysSeconds' returns a value
+
+[LINKING]
+function 1, ledDigitsDisplay, address 851
+stack usage 8 + 4
+function 'ledDigitsDisplay' requires 7 argument
+function 'ledDigitsDisplay' has no return value
+
+[RESERVED WORDS]
+#inherit
+#LISTCODE
+#MODE
+#STACK
+#OPTIMIZE_ON
+#OPTIMIZE_OFF
+byte
+word
+dword
+float
+private
+#IF
+#IFNOT
+#ELSE
+#ENDIF
+#CONST
+#constant
+#USE
+USING
+func
+endfunc
+var
+#STOP
+#DATA
+#ASM
+#END
+#platform
+EXISTS
+#ERROR
+#MESSAGE
+#NOTICE
+sizeof
+argcount
+if
+else
+endif
+while
+wend
+repeat
+until
+forever
+return
+break
+continue
+for
+next
+switch
+case
+default
+endswitch
+print
+goto
+gosub
+endsub
+mcall
+lookup8
+lookup16
+
+[MACRO]
+
+[CONSTANTS]
+__MAXMEM                          00003840      14400  (usage 1)
+__MAXPROG                         00003840      14400  (usage 1)
+FORM_MAIN_RACE_DISPLAY            00000001          1  (usage 9)
+I_TOUCH_DISABLE                   00000020         32  (usage 6)
+iCapVoltNegative                  00000001          1  (usage 6)
+iCapVoltPositive                  00000000          0  (usage 6)
+iCruiseResumeIncrease             00000002          2  (usage 12)
+iCruiseSetReduce                  00000003          3  (usage 12)
+iLapTime                          00000006          6  (usage 6)
+IMAGE_INDEX                       00000009          9  (usage 15)
+IMAGE_XPOS                        00000002          2  (usage 3)
+iStatictext1                      00000008          8  (usage 3)
+iStatictext2                      00000009          9  (usage 3)
+iTotalTime                        00000004          4  (usage 6)
+LANDSCAPE                         00000000          0  (usage 3)
+LAP_TIME_RECALCULATE_INTERVAL     00000064        100  (usage 3)
+LEFT_COL_WIDTH                    0000007C        124  (usage 3)
+NO_FORM                           00000000          0  (usage 3)
+PICASO                            00000001          1  (usage 3)
+SCREEN_MODE                       00000017         23  (usage 3)
+STATE_BTN_OFF                     00000000          0  (usage 3)
+STATE_BTN_ON                      00000001          1  (usage 3)
+TIMER_LAP                         00000001          1  (usage 9)
+TIMER_TOTAL                       00000000          0  (usage 6)
+TOUCH_ENABLE                      00000000          0  (usage 3)
+TOUCH_GETX                        00000001          1  (usage 3)
+TOUCH_GETY                        00000002          2  (usage 3)
+TOUCH_PRESSED                     00000001          1  (usage 3)
+TOUCH_STATUS                      00000000          0  (usage 3)
+
+[PmmC FUNCTIONS]
+file_LoadImageControl             FFFFFF04        -252  args=3 r=1  (usage 3)
+file_Mount                        FFFFFF03        -253  args=0 r=1  (usage 6)
+gfx_Cls                           FFFFFFCD         -51  args=0 r=0  (usage 9)
+gfx_Set                           FFFFFFCE         -50  args=2 r=0  (usage 3)
+img_ClearAttributes               FFFFFF45        -187  args=3 r=1  (usage 6)
+img_SetWord                       FFFFFF49        -183  args=4 r=1  (usage 18)
+img_Show                          FFFFFF47        -185  args=2 r=1  (usage 33)
+pause                             FFFFFFFA          -6  args=1 r=0  (usage 6)
+putstr                            FFFFFFF7          -9  args=1 r=1  (usage 6)
+sys_T                             FFFFFF43        -189  args=0 r=1  (usage 9)
+sys_T_HI                          FFFFFF42        -190  args=0 r=1  (usage 3)
+touch_Get                         FFFFFF37        -201  args=1 r=1  (usage 9)
+touch_Set                         FFFFFF38        -200  args=1 r=0  (usage 3)
+
+[USER FUNCTIONS]
+checkTouchEvents                  00000049  args=0 r=0  (usage 3)
+draw_MainRaceDisplay              00000157  args=0 r=0  (usage 6)
+getSysSeconds                     00000336  args=0 r=0  (usage 12)
+ledDigitsDisplay                  00000353  args=7 r=0  (usage 6)
+startTimer                        000002E7  args=1 r=0  (usage 9)
+
+[GLOBAL VARIABLES]
+activeForm                             3  word       (usage 10)
+disk                                   1  word       (usage 6)
+hndl                                   2  word       (usage 60)
+LapStartTime                           5  word       (usage 7)
+LapTimeMins                            8  word       (usage 16)
+LapTimeSecs                            9  word       (usage 19)
+TimerStartTime                         4  word       (usage 7)
+TotalTimeMins                          6  word       (usage 16)
+TotalTimeSecs                          7  word       (usage 19)
+
+[PRIVATE VARIABLES]
+draw_MainRaceDisplay.lapTime          11word      (member of draw_MainRaceDisplay)  (usage 3)
+draw_MainRaceDisplay.lastUpdateTime      10word      (member of draw_MainRaceDisplay)  (usage 3)
+draw_MainRaceDisplay.totalTime        12word      (member of draw_MainRaceDisplay)  (usage 3)
+
+[DATA]
+0007: 4D 6F 75 6E 74 69 6E 67 2E 2E 2E 0A 00 44 72 69     Mounting.....Dri
+0017: 76 65 20 6E 6F 74 20 6D 6F 75 6E 74 65 64 2E 2E     ve not mounted..
+0027: 2E 00 4D 41 49 4E 44 49 7E 31 2E 64 61 74 00 4D     ..MAINDI~1.dat.M
+0037: 41 49 4E 44 49 7E 31 2E 67 63 69 00 02 03 1A 03     AINDI~1.gci.....
+0047: 32 03                                               2.
+
+[__MAXPROG]
+14400
+[__MAXMEM]
+14400
+
+[PROGRAM]
+main
+[CODESIZE]
+1048
+[MEMSIZE]
+12
+[ARGCOUNT]
+0
+[RETURNS]
+NO
+[STACKSIZE]
+0 (AUTO)
+[STACK_ESTIMATE]
+42   (nb:- worst case estimate)
+[MODE]
+0
+
+[PROJECT]
+C:\Users\Mike\Documents\LCDDisplay\MainDisplay.4Dg
+C:\Program Files (x86)\4D Labs\4D Workshop 4 IDE\include\uLCD-43PT.fnc
+C:\Program Files (x86)\4D Labs\4D Workshop 4 IDE\include\PicasoFunctions.fnc
+C:\Program Files (x86)\4D Labs\4D Workshop 4 IDE\include\4DGL_16bitColours.fnc
+C:\Program Files (x86)\4D Labs\4D Workshop 4 IDE\include\VisualConst.inc
+C:\Users\Mike\Documents\LCDDisplay\MainDisplay.4DWork\MainDisplayConst.inc
+C:\Program Files (x86)\4D Labs\4D Workshop 4 IDE\include\ledDigitsDisplay.inc

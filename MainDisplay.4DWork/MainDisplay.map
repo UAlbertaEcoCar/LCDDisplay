@@ -1,0 +1,6 @@
+linked : 6     checkTouchEvents 0049
+linked : 5     main 007D
+linked : 4     draw_MainRaceDisplay 0157
+linked : 3     startTimer 02E7
+linked : 2     getSysSeconds 0336
+linked : 1     ledDigitsDisplay 0353
